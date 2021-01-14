@@ -371,8 +371,8 @@
 	        /* height: 250px; */
 	        text-align: left;
 	        position: absolute;
-	        top: 65PX;
-	        background: rgba(0, 0, 0, 0.6);
+	        top: 90PX;
+	        background: rgba(23, 43, 93, 0.8);
 	        z-index: 9999;
 	        display: none;
 	        border-radius: 5px;
@@ -380,6 +380,14 @@
 	        border-style: solid;
 	        border-color: #8fccff8f;
 	        bottom: 20%;
+	        margin-top: 0px !important;
+	        padding: 1px;
+	        /* background-color: rgba(255, 255, 255, 0.03); */
+	        border: 10px solid rgba(108, 139, 255, 0);
+	        border-image: url(./img/border_image.png) 20 round;
+	        -webkit-border-image: url(./img/border_image.png) 20 round;
+	        -moz-border-image: url(/./img/border_image.png) 20 round;
+	        -o-border-image: url(./img/border_image.png) 20 round;
 	    }
 	    
 	    .myButton {
