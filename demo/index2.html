@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>加载离线arcgis卫星、天地图标签、风机模型</title>
+	<link rel="stylesheet" href="./Cesium/Widgets/widgets.css" />
+		<script src="./Cesium/Cesium.js"></script>
+	</head>
+	<body>
+		<div  id="cesiumContainer" style="width: 100%;height: 900px;background-color: rosybrown;"></div>
+	</body>
+	<script>
+		  	var viewer = new Cesium.Viewer('cesiumContainer',{ 
+	   		//需要进行可视化的数据源的集合
+		            animation: false, //是否显示动画控件
+		            shouldAnimate : true,
+		            homeButton: false, //是否显示Home按钮
+		            fullscreenButton: false, //是否显示全屏按钮
+		            baseLayerPicker: false, //是否显示图层选择控件
+		            geocoder: false, //是否显示地名查找控件
+		            timeline: false, //是否显示时间线控件
+		            sceneModePicker: true, //是否显示投影方式控件
+		            navigationHelpButton: false, //是否显示帮助信息控件
+		            infoBox: false, //是否显示点击要素之后显示的信息
+		            requestRenderMode: true, //启用请求渲染模式
+		            scene3DOnly: false, //每个几何实例将只能以3D渲染以节省GPU内存
+		            sceneMode: 3, //初始场景模式 1 2D模式 2 2D循环模式 3 3D模式  Cesium.SceneMode
+		            fullscreenElement: document.body, //全屏时渲染的HTML元素 暂时没发现用处
+		            imageryProvider : new Cesium.WebMapTileServiceImageryProvider({
+				          url: 'http://t0.tianditu.com/img_w/wmts?',
+				          layer: 'img',
+				          style: 'default',
+				          format: 'tiles',
+				          tileMatrixSetID: 'w',
+				          credit: new Cesium.Credit('天地图全球影像服务'),
+				      
+				    })
+		});
+		
+		// 启用地球照明
+        //viewer.scene.globe.enableLighting = true;
+
+		  //全球影像中文注记服务
+	     viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
+		    url: "http://t0.tianditu.com/cia_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=cia&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default.jpg",
+		    layer: "tdtAnnoLayer",
+		    style: "default",
+		    format: "image/jpeg",
+		    tileMatrixSetID: "GoogleMapsCompatible",
+		    maximumLevel: 13,
+			minimumLevel: 1,
+		    show: false
+		}));
+		//飞行定位
+		viewer.scene.camera.flyTo({
+		   destination: new Cesium.Cartesian3.fromDegrees(109,34,3000),
+		    orientation: {
+	            heading : Cesium.Math.toRadians(20.0), // 方向
+	            pitch : Cesium.Math.toRadians(-90.0),// 倾斜角度
+	            roll : 0
+	       },
+	       duration:1
+		});
+		/**
+		 * 删除所有实体模型
+		 */
+		viewer.entities.removeAll();
+		var position=Cesium.Cartesian3.fromDegrees(109,34, 0);
+			addFengjiModel(position);
+			addFengjiModel2();
+		function  addFengjiModel(position){
+			var hpRoll = new Cesium.HeadingPitchRoll(Cesium.Math.toRadians(180), 0, 0);
+		    var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpRoll);
+		    var color=Cesium.Color.LIME ;
+		    // 添加模型
+		    var model = viewer.entities.add({
+		        // 模型id
+		       // id:'model',
+		        // 模型位置
+		        position: position,
+		        // 模型方向
+		        orientation: orientation,
+		        // 模型资源
+		        model: {
+		            // 模型路径
+		            uri: 'http://127.0.0.1:8000/cesium-navigation-umd/demo/model/gltf/i94b006.gltf',
+		            // 模型最小刻度
+		            minimumPixelSize: 128,
+//		            // 模型最大刻度
+		            maximumSize: 128,
+		            //设置模型最大放大大小
+		            maximumScale : 200,
+		            // 模型是否可见
+		            show: true,
+		            // 模型轮廓颜色
+		            silhouetteColor:Cesium.Color.WHITE,
+		            // 模型颜色  ，这里可以设置颜色的变化
+		            color: Cesium.Color.fromAlpha(Cesium.Color.RED, parseFloat(1.0)), //包含透明度的颜色
+		              // 仅用于调试，显示魔仙绘制时的线框
+			        debugWireframe : false,
+			        // 仅用于调试。显示模型绘制时的边界球。
+			        debugShowBoundingVolume : false,
+			        
+			        scale:10,
+			        runAnimations:true                //是否运行模型中的动画效果
+		        },
+		        // 添加描述
+		        description: '风机模型'
+		    });
+		    // 视角切换到模型
+		    //viewer.trackedEntity = model;
+		}
+		
+		function addFengjiModel2(){
+			  var position = Cesium.Cartesian3.fromDegrees(109.02,34.02,0);
+			    var hpRoll = new Cesium.HeadingPitchRoll(Cesium.Math.toRadians(45), 0, 0);
+		    var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpRoll);
+		    var color=Cesium.Color.LIME ;
+		    // 添加模型
+		    var model = viewer.entities.add({
+		        // 模型id
+		       // id:'model',
+		        // 模型位置
+		        position: position,
+		        // 模型方向
+		        orientation: orientation,
+		        // 模型资源
+		        model: {
+		            // 模型路径
+		            uri: 'http://127.0.0.1:8000/cesium-navigation-umd/demo/model/gltf/i94b010.gltf',
+		            // 模型最小刻度
+		            minimumPixelSize: 128,
+//		            // 模型最大刻度
+		            maximumSize: 128,
+		            //设置模型最大放大大小
+		            maximumScale : 200,
+		            // 模型是否可见
+		            show: true,
+		            // 模型轮廓颜色
+		            silhouetteColor:Cesium.Color.WHITE,
+		            // 模型颜色  ，这里可以设置颜色的变化
+		            color: Cesium.Color.fromAlpha(Cesium.Color.RED, parseFloat(1.0)), //包含透明度的颜色
+		              // 仅用于调试，显示魔仙绘制时的线框
+			        debugWireframe : false,
+			        // 仅用于调试。显示模型绘制时的边界球。
+			        debugShowBoundingVolume : false,
+			        
+			        scale:10,
+			        runAnimations:true                //是否运行模型中的动画效果
+		        },
+		        // 添加描述
+		        description: '风机模型'
+		    });
+		    // 视角切换到模型
+		    //viewer.trackedEntity = model;
+		}
+	</script>
+</html>

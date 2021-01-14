@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html class="no-js css-menubar" lang="zh-cn">
+<head>
+<title>&#x5F39;&#x7A97;&#x5B50;&#x9875;&#x9762;</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui">
+<meta name="author" content="&#x706B;&#x661F;&#x79D1;&#x6280; http://cesium.marsgis.cn ">
+<meta name="renderer" content="webkit"><link rel="icon" type="image/png" href="../../img/favicon/favicon.png">
+<meta name="mobile-web-app-capable" content="yes"><link rel="icon" sizes="192x192" href="img/favicon/apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="&#x706B;&#x661F;&#x79D1;&#x6280;MarsGIS"><link rel="apple-touch-icon-precomposed" href="../../img/favicon/apple-touch-icon.png">
+<meta name="msapplication-TileImage" content="../../img/favicon/app-icon72x72@2x.png">
+<meta name="msapplication-TileColor" content="#62a8ea">
+<link href="./css/widget-win.css" rel="stylesheet">
+ <link rel="stylesheet" type="text/css" href="../../Cesium/Widgets/widgets.css">
+<style>
+.btn_none{background:0 0;color:#fff}
+.btn-group{display:flex;align-items:flex-start;flex-wrap:wrap;padding-left:20px}
+.tool-btn{cursor:pointer;user-select:none;min-width:60px;height:96px;box-sizing:border-box;margin:0 30px 10px 0;text-align:center;padding-top:12px}
+.tool-thum{transition:all .2s ease;width:50px;height:50px;margin:0 auto;border-radius:50%;margin-bottom:10px;background:#fd960f;cursor:pointer}
+.tool-thum img{width:24px;height:24px;margin:13px}
+</style>
+</head>
+<body style="padding:5px;text-align:center" title="&#x63D0;&#x793A;&#xFF1A;&#x5355;&#x51FB;&#x6309;&#x94AE;&#x6FC0;&#x6D3B;&#x5BF9;&#x5E94;&#x529F;&#x80FD;,&#x5728;&#x5730;&#x56FE;&#x4E0A;&#x5355;&#x51FB;&#x5F00;&#x59CB;&#xFF0C;&#x7ED8;&#x5236;&#x4E2D;&#x5355;&#x51FB;&#x589E;&#x52A0;&#x70B9;&#x3001;&#x53CC;&#x51FB;&#x7ED3;&#x675F;&#x3002;">
+<div class="btn-group">
+	<div id="btn_measure_length" class="tool-btn">
+		<div class="tool-thum" style="background:#dd751b">
+			<img src="image/measure-length.svg" alt="&#x7A7A;&#x95F4;&#x8DDD;&#x79BB;">
+		</div>
+		<span class="btn_none">&#x7A7A;&#x95F4;&#x8DDD;&#x79BB;</span>
+	</div>
+	<div id="btn_measure_length_td" class="tool-btn">
+		<div class="tool-thum" style="background:#c092fe">
+			<img src="image/measure-length2.svg" alt="&#x8D34;&#x5730;&#x8DDD;&#x79BB;">
+		</div>
+		<span class="btn_none">&#x8D34;&#x5730;&#x8DDD;&#x79BB;</span>
+	</div>
+	<div id="btn_measure_section" class="tool-btn">
+		<div class="tool-thum" style="background:#88b8ff">
+			<img src="image/measure-section.svg" alt="&#x5256;&#x9762;">
+		</div>
+		<span class="btn_none">&#x5256;&#x9762;</span>
+	</div>
+	<div id="btn_measure_area" class="tool-btn">
+		<div class="tool-thum" style="background:#3de3f4">
+			<img src="image/measure-area.svg" alt="&#x9762;&#x79EF;">
+		</div>
+		<span class="btn_none">&#x6C34;&#x5E73;&#x9762;&#x79EF;</span>
+	</div>
+	<div id="btn_measure_area_td" class="tool-btn">
+		<div class="tool-thum" style="background:#c092fe">
+			<img src="image/measure-area.svg" alt="&#x9762;&#x79EF;">
+		</div>
+		<span class="btn_none">&#x8D34;&#x5730;&#x9762;&#x79EF;</span>
+	</div>
+	<div id="btn_measure_angle" class="tool-btn">
+		<div class="tool-thum" style="background:#95d333">
+			<img src="image/measure-angle.svg" alt="&#x89D2;&#x5EA6;">
+		</div>
+		<span class="btn_none">&#x89D2;&#x5EA6;</span>
+	</div>
+	<div id="btn_measure_height" class="tool-btn">
+		<div class="tool-thum" style="background:#55d5a0">
+			<img src="image/measure-height.svg" alt="&#x9AD8;&#x5EA6;&#x5DEE;">
+		</div>
+		<span class="btn_none">&#x9AD8;&#x5EA6;&#x5DEE;</span>
+	</div>
+	<div id="btn_measure_supHeight" class="tool-btn">
+		<div class="tool-thum" style="background:#37bc41">
+			<img src="image/measure-height-sup.svg" alt="&#x4E09;&#x89D2;&#x6D4B;&#x91CF;">
+		</div>
+		<span class="btn_none">&#x4E09;&#x89D2;&#x6D4B;&#x91CF;</span>
+	</div>
+	<div id="btn_measure_point" class="tool-btn">
+		<div class="tool-thum" style="background:#babc31">
+			<img src="image/measure-coor.svg" alt="&#x5750;&#x6807;&#x6D4B;&#x91CF;">
+		</div>
+		<span class="btn_none">&#x5750;&#x6807;&#x6D4B;&#x91CF;</span>
+	</div>
+</div>
+<div class="checkbox checkbox-primary checkbox-inline">
+	<input id="chk_onlyPickModelPosition" class="styled" type="checkbox">
+	<label for="chk_onlyPickModelPosition">&#x4EC5;&#x6D4B;&#x91CF;&#x6A21;&#x578B;(&#x4E0D;&#x62FE;&#x53D6;&#x5730;&#x5F62;)</label>
+</div>
+<div id="measure_danwei" style="margin-top:5px">
+	<span style="font-size:14px;padding-right:10px">&#x5355;&#x4F4D;</span> 
+	<select id="measure_length_danwei" class="form-control" style="width:190px!important"><option value="auto">&#x81EA;&#x52A8;</option><option value="m">&#x7C73;</option><option value="km">&#x516C;&#x91CC;</option><option value="mile">&#x6D77;&#x91CC;</option><option value="zhang">&#x4E08;</option>
+	</select> 
+	<select id="measure_area_danwei" class="form-control" style="width:190px!important;display:none"><option value="auto">&#x81EA;&#x52A8;</option><option value="m">&#x5E73;&#x65B9;&#x7C73;</option><option value="km">&#x5E73;&#x65B9;&#x516C;&#x91CC;</option><option value="mu">&#x4EA9;</option><option value="ha">&#x516C;&#x9877;</option></select>
+</div>
+<div style="margin-top:5px">
+	<span id="lbl_measure_result" style="font-size:16px"></span>
+</div>
+<div>
+	<button id="btn_measure_clear" type="button" class="btn" style="background:#07f;color:#fff;margin-top:15px;border-radius:15px;padding-left:30px;padding-right:30px">&#x6E05;&#x7A7A;&#x6D4B;&#x91CF;&#x6570;&#x636E;</button>
+</div>
+<script type="text/javascript" src="../../js/jquery/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="../../Cesium/Cesium.js"></script>
+<script src="view.js"></script></body></html>
