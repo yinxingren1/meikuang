@@ -2,9 +2,9 @@
 <html>
 
 <head>
-    <title>webgis三维综合版</title>
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    <link href="Content/site.css" rel="stylesheet" type="text/css" />
+	<title>webgis三维综合版</title>
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<link href="Content/site.css" rel="stylesheet" type="text/css" />
 	<link href="Content/bootstrap.css" rel="stylesheet" type="text/css" />
 	<link href="js/layui/css/layui.css" rel="stylesheet" type="text/css" />
 	<!-- 目录树样式 -->
@@ -15,67 +15,72 @@
 	<!-- 自定义window样式 -->
 	<link href="Content/Tools-Window-div.css" rel="stylesheet" type="text/css" />
 
-    <link rel="stylesheet" type="text/css" href="./Cesium/Widgets/widgets.css">
-    <link rel="stylesheet" type="text/css" href="../dist/cesium-navigation.css">
+	<link rel="stylesheet" type="text/css" href="./Cesium/Widgets/widgets.css">
+	<link rel="stylesheet" type="text/css" href="../dist/cesium-navigation.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
 	<script type="text/javascript" src="js/jquery/jquery-1.9.1.min.js"></script>
-    <script type="text/javascript" src="./Cesium/Cesium.js"></script>
-    <script type="text/javascript" src="../dist/CesiumNavigation.umd.js"></script>
+	<script type="text/javascript" src="./Cesium/Cesium.js"></script>
+	<script type="text/javascript" src="../dist/CesiumNavigation.umd.js"></script>
 	<!--ztree-->
 	<script type="text/javascript" src="js/jquery.ztree.core.js"></script>
 	<script type="text/javascript" src="js/jquery.ztree.excheck.js"></script>
-	
+
 	<!--layui-->
 	<script type="text/javascript" src="js/layui/layui.js"></script>
 	<script type="text/javascript" src="js/mapv.js"></script>
+
 <body>
 	<div class="mainHeader">
-		<div class="logo"><img src="img/btxx.png"/></div>
-		
+		<div class="logo"><img src="img/btxx.png" /></div>
+
 		<div class="mediaNav fa fa-navicon" id="mediaNav"></div>
 		<ul class="navbar-nav" id="navList">
-			<li id="item-a" class="firsturl selected">                           
-				<a>										
+			<li id="item-a" class="firsturl selected">
+				<a>
 					<span>首页</span>
 				</a>
 			</li>
-			
-			<li data-name="/framework/lte/" class="firsturl">	
-				<a id="yun_map_1">		
+
+			<li data-name="/framework/lte/" class="firsturl">
+				<a id="yun_map_1">
 					<span>三维模型</span>
-				</a>	
+				</a>
 				<ul class="sub_menu">
-					<li data-name="changfang_model" class="secondUL">	
+					<li data-name="changfang_model" class="secondUL">
 						<a>厂房</a>
 					</li>
-					<li data-name="/datasets/admin/indexlte.php" class="secondUL">	
+					<li data-name="/datasets/admin/indexlte.php" class="secondUL">
 						<a>数据共享</a>
 					</li>
 					<li data-name="/maps/admin/indexlte.html" class="secondUL">
 						<a>知识共享</a>
 					</li>
-					<li data-name="/applications/admin/indexlte.php" class="secondUL">	
+					<li data-name="/applications/admin/indexlte.php" class="secondUL">
 						<a>应用共享</a>
 					</li>
-					<li data-name="/functions/admin/indexlte.php" class="secondUL">	
+					<li data-name="/functions/admin/indexlte.php" class="secondUL">
 						<a>功能共享</a>
 					</li>
-					<li data-name="/modules/admin/indexlte.html" class="secondUL">	
+					<li data-name="/modules/admin/indexlte.html" class="secondUL">
 						<a>模块共享</a>
 					</li>
-				</ul>						
-			</li>
-			<li data-name="/framework/lte/" class="firsturl">	
-				<a id="menu-switch">		
-					<span>图层叠加</span>
-				</a>	
+					<li data-name="query3Dtiles" class="secondUL">
+						<a>建筑查询</a>
+					</li>
+				</ul>
 			</li>
 			<li data-name="/framework/lte/" class="firsturl">
-				<a id="yun_map_1">		
+				<a id="menu-switch">
+					<span>图层叠加</span>
+				</a>
+			</li>
+			<li data-name="/framework/lte/" class="firsturl">
+				<a id="yun_map_1">
 					<span>工具</span>
 				</a>
 				<ul class="sub_menu">
 					<li class="widget-btn" data-id="measure"><a href="javascript:void(0)">
-						<i class="fa fa-calculator"></i>图上量算</a>
+							<i class="fa fa-calculator"></i>图上量算</a>
 					</li>
 					<li class="widget-btn" data-id="analysis">
 						<a href="javascript:void(0)"><i class="fa fa-bar-chart"></i>空间分析</a>
@@ -115,41 +120,43 @@
 					</li>
 				</ul>
 			</li>
-			<li data-name="/framework/lte/" class="firsturl">	
-				<a id="yun_map_1">		
+			<li data-name="/framework/lte/" class="firsturl">
+				<a id="yun_map_1">
 					<span>可视化</span>
-				</a>	
+				</a>
 				<ul class="sub_menu">
-					<li data-name="heatlight" class="secondUL">	
+					<li data-name="heatlight" class="secondUL">
 						<a>热力图</a>
 					</li>
-					<li data-name="leida" class="secondUL">	
+					<li data-name="leida" class="secondUL">
 						<a>雷达图</a>
 					</li>
 					<li data-name="intensity" class="secondUL">
 						<a>密度</a>
 					</li>
-					<li data-name="honeycomb" class="secondUL">	
+					<li data-name="honeycomb" class="secondUL">
 						<a>蜂窝图</a>
 					</li>
-					<li data-name="polylineSimple" class="secondUL">	
+					<li data-name="polylineSimple" class="secondUL">
 						<a>流向图</a>
 					</li>
-					<li data-name="polylineAnimation" class="secondUL">	
+					<li data-name="polylineAnimation" class="secondUL">
 						<a>大迁徙</a>
 					</li>
-					<li data-name="webglAnimation" class="secondUL">	
+					<li data-name="webglAnimation" class="secondUL">
 						<a>分级色块</a>
 					</li>
-				</ul>						
+				</ul>
 			</li>
 		</ul>
 		<div class="positionMarker" id="positionMarker" style="left: 382.938px; width: 0px;"></div>
 	</div>
 	<!--右侧工具条-->
-	<div style="    position: absolute;top: 60px;right: 10px;z-index: 9999;background: rgba(43,44,47,.8);border-radius: 3px;box-shadow: 1px 2px 1px rgba(0,0,0,.15);">
+	<div
+		style="    position: absolute;top: 60px;right: 10px;z-index: 9999;background: rgba(43,44,47,.8);border-radius: 3px;box-shadow: 1px 2px 1px rgba(0,0,0,.15);">
 		<div class="bar-item menu-switch" id="menu-point" data-type="7">
-			<img src="img/定位.png" alt="定位" title="定位" style="cursor:pointer;display:block;width:25px;height:25px;margin:0 auto 7px;"/>
+			<img src="img/定位.png" alt="定位" title="定位"
+				style="cursor:pointer;display:block;width:25px;height:25px;margin:0 auto 7px;" />
 		</div>
 	</div>
 	<!-- 上方工具条 -->
@@ -160,13 +167,13 @@
 				<span style="color:white;">图层<span>
 			</div>
 			 右箭头点击展开 -->
-			<!--<div class="bar-item menu-switch" id="hide-switch" data-type="8" style="display:block;width:50%;">
+	<!--<div class="bar-item menu-switch" id="hide-switch" data-type="8" style="display:block;width:50%;">
 				<img src="img/display.png" style="width:25px;height:25px;margin:15px;"/>
 			</div>
 		</div>
 		
 		 已展开工具条 -->
-		<!--<div class="topbar-right" id="topbar-right" style="display:none;">
+	<!--<div class="topbar-right" id="topbar-right" style="display:none;">
 			<div class="bar-item tool-switch" id="tool-switch" data-type="1">
 				<img src="img/effect.png" style="display:block;width:25px;height:25px;margin:0 auto 7px;"/>
 				<span style="color:white;">光照<span>
@@ -201,7 +208,7 @@
 			</div>
 			
 			 左箭头点击隐藏 -->
-			<!--<div class="bar-item opera-switch" id="display-switch" data-type="4">
+	<!--<div class="bar-item opera-switch" id="display-switch" data-type="4">
 				<img src="img/hide.png" style="display:block;width:25px;height:25px;margin:15px;"/>
 			</div>	
 		</div>
@@ -209,93 +216,96 @@
 	<div class="zTreeDemoBackground" id="zTreeContainer" style="left:0.5%;">
 		<ul id="treeDemo" class="ztree"></ul>
 	</div>
-	
-    <div id="test" style="width:100%;height:100%"></div>
 
-    <script type="text/javascript">
-	Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4ZmJiMTQzMC0xYjFlLTRlZDktYjI5ZS1mOGIxMzY2ZDQ1NTciLCJpZCI6ODYwOCwic2NvcGVzIjpbImFzciIsImdjIl0sImlhdCI6MTU1MjM3OTcyN30.MSLoEjzlm83XTm1qRlt521SlgoU2jsthi566S6-9m_w';
-        var viewer = new Cesium.Viewer('test', {
-            baseLayerPicker: false,
-            navigationHelpButton: false,
-            fullscreenButton: false,
-            animation: false,
-            geocoder: false,
-            homeButton: false,
-            sceneModePicker: false,
+	<div id="test" style="width:100%;height:100%"></div>
+
+	<script type="text/javascript">
+		Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4ZmJiMTQzMC0xYjFlLTRlZDktYjI5ZS1mOGIxMzY2ZDQ1NTciLCJpZCI6ODYwOCwic2NvcGVzIjpbImFzciIsImdjIl0sImlhdCI6MTU1MjM3OTcyN30.MSLoEjzlm83XTm1qRlt521SlgoU2jsthi566S6-9m_w';
+		var viewer = new Cesium.Viewer('test', {
+			baseLayerPicker: false,
+			navigationHelpButton: false,
+			fullscreenButton: false,
+			animation: false,
+			geocoder: false,
+			homeButton: false,
+			sceneModePicker: false,
 			infoBox: true,  //是否显示点击要素之后显示的信息
 			imageryProvider: new Cesium.WebMapTileServiceImageryProvider({
-                url: "http://t0.tianditu.com/img_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=img&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=ebf64362215c081f8317203220f133eb",
-                layer: "tdtBasicLayer",
-                style: "default",
-                format: "image/jpeg",
-                tileMatrixSetID: "GoogleMapsCompatible",
-                show: false
-            })
-        });
+				url: "http://t0.tianditu.com/img_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=img&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=ebf64362215c081f8317203220f133eb",
+				layer: "tdtBasicLayer",
+				style: "default",
+				format: "image/jpeg",
+				tileMatrixSetID: "GoogleMapsCompatible",
+				show: false
+			})
+		});
 		viewer.scene.globe.depthTestAgainstTerrain = true;
 		viewer._cesiumWidget._creditContainer.style.display = "none";
 		viewer.scene.globe.enableLighting = true;//启用以太阳为光源的地球
 		viewer.timeline.container.style.display = 'none'; //隐藏时间线控件
 
-        // Bounding sphere这个就是让镜头靠近的Home键
-        viewer.camera.flyTo({ destination: Cesium.Cartesian3.fromDegrees(116.4, 40, 800.0) });
+		// Bounding sphere这个就是让镜头靠近的Home键
+		viewer.camera.flyTo({ destination: Cesium.Cartesian3.fromDegrees(116.4, 40, 800.0) });
 
-        
 
-        var options = {};
-        // 用于在使用重置导航重置地图视图时设置默认视图控制。接受的值是Cesium.Cartographic 和 Cesium.Rectangle.
-        options.defaultResetView = Cesium.Rectangle.fromDegrees(80, 22, 130, 50);
-        // 用于启用或禁用罗盘。true是启用罗盘，false是禁用罗盘。默认值为true。如果将选项设置为false，则罗盘将不会添加到地图中。
-        options.enableCompass = true;
-        // 用于启用或禁用缩放控件。true是启用，false是禁用。默认值为true。如果将选项设置为false，则缩放控件将不会添加到地图中。
-        options.enableZoomControls = true;
-        // 用于启用或禁用距离图例。true是启用，false是禁用。默认值为true。如果将选项设置为false，距离图例将不会添加到地图中。
-        options.enableDistanceLegend = true;
-        // 用于启用或禁用指南针外环。true是启用，false是禁用。默认值为true。如果将选项设置为false，则该环将可见但无效。
-        options.enableCompassOuterRing = true;
 
-        CesiumNavigation.umd(viewer, options);
+		var options = {};
+		// 用于在使用重置导航重置地图视图时设置默认视图控制。接受的值是Cesium.Cartographic 和 Cesium.Rectangle.
+		options.defaultResetView = Cesium.Rectangle.fromDegrees(80, 22, 130, 50);
+		// 用于启用或禁用罗盘。true是启用罗盘，false是禁用罗盘。默认值为true。如果将选项设置为false，则罗盘将不会添加到地图中。
+		options.enableCompass = true;
+		// 用于启用或禁用缩放控件。true是启用，false是禁用。默认值为true。如果将选项设置为false，则缩放控件将不会添加到地图中。
+		options.enableZoomControls = true;
+		// 用于启用或禁用距离图例。true是启用，false是禁用。默认值为true。如果将选项设置为false，距离图例将不会添加到地图中。
+		options.enableDistanceLegend = true;
+		// 用于启用或禁用指南针外环。true是启用，false是禁用。默认值为true。如果将选项设置为false，则该环将可见但无效。
+		options.enableCompassOuterRing = true;
+
+		CesiumNavigation.umd(viewer, options);
 		//图层列表展示
 		var layerContainer = document.getElementById('zTreeContainer');
 		if (layerContainer.style.display != 'block')
 			layerContainer.style.display = 'block';
-			
-	$(".sub_menu").on("click","li",function(){      //只需要找到你点击的是哪个ul里面的就行
-		drawRemove(viewer);
-     	var name = $(this).attr('data-name');
-		if(name == 'heatlight'){
-			heatlight();
-		}
-		else if(name == 'leida'){
-			leida();
-		}
-		else if(name == 'intensity'){
-			intensity();
-		}
-		else if(name == 'honeycomb'){
-			honeycomb();
-		}
-		else if(name == 'polylineSimple'){
-			polylineSimple();
-		}
-		else if(name == 'polylineAnimation'){
-			polylineAnimation();
-		}
-		else if(name == 'webglAnimation'){
-			webglAnimation();
-		}
-		else if(name == 'changfang_model'){
-			changfang_model();
-		}
-		
- 	});
 
-    </script>
+		$(".sub_menu").on("click", "li", function () {      //只需要找到你点击的是哪个ul里面的就行
+			drawRemove(viewer);
+			var name = $(this).attr('data-name');
+			if (name == 'heatlight') {
+				heatlight();
+			}
+			else if (name == 'leida') {
+				leida();
+			}
+			else if (name == 'intensity') {
+				intensity();
+			}
+			else if (name == 'honeycomb') {
+				honeycomb();
+			}
+			else if (name == 'polylineSimple') {
+				polylineSimple();
+			}
+			else if (name == 'polylineAnimation') {
+				polylineAnimation();
+			}
+			else if (name == 'webglAnimation') {
+				webglAnimation();
+			}
+			else if (name == 'changfang_model') {
+				changfang_model();
+			} else if (name == 'query3Dtiles') {
+				query3Dtiles.start();
+			}
+
+		});
+
+	</script>
 	<script src="js/windowControl.js"></script>
 	<script src="js/ztreeIni.js"></script>
 	<script src="js/dialog.js"></script>
 	<script src="js/mapvcesuim.js"></script>
 	<script src="js/model.js"></script>
+	<script src="js/query3DTlies.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,58 @@
+.bx-popup-ctn {
+    position : absolute;
+    z-index  : 999;
+    color    : #fff;
+    margin   : -20px 0px 0px 0px;
+    transform: translate(-50%, -100%);
+}
+
+.bx-popup-ctn .divpoint-wrap {
+    padding: 0;
+    width  : max-content;
+}
+
+.bx-popup-ctn .divpoint-center {
+    background   : linear-gradient(45deg, rgba(5, 118, 161, 0.8), rgba(77, 116, 164, 0.8), 40%, rgba(49, 123, 151, 0.8));
+    border       : 1px solid #0776a1;
+    border-radius: 5px;
+}
+
+.bx-popup-ctn .bx-popup-tip {
+    width            : 17px;
+    background       : #fff;
+    height           : 17px;
+    padding          : 1px;
+    margin           : -10px auto 0;
+    -webkit-transform: rotate(45deg);
+    -moz-transform   : rotate(45deg);
+    -ms-transform    : rotate(45deg);
+    transform        : rotate(45deg);
+}
+
+.bx-popup-ctn .bx-popup-header-ctn {
+    background: #0776a1cc;
+    color     : #fff;
+    font-size : 15px;
+    padding   : 4px;
+    margin    : 0 0 0 0px;
+}
+
+.bx-popup-ctn .bx-popup-content-ctn {
+    padding: 5px 8px;
+}
+
+.bx-popup-ctn .bx-popup-content-ctn .bx-popup-content img {
+    border-radius: 100px;
+}
+
+.bx-popup-ctn .directional {
+    position  : absolute;
+    bottom    : 0;
+    left      : -10px;
+    width     : 0px;
+    height    : 0px;
+    transform : none;
+    margin    : 0px 0 -20px 50%;
+    border    : 10px solid transparent;
+    border-top: 10px solid #0776a1cc;
+}
