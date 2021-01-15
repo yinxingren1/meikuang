@@ -759,9 +759,11 @@
 }
 
 .navbar-nav {
-    float: none;
-    width: 1200px;
-    margin: 0 auto
+    position: absolute;
+    top: 72px;
+    left: 38%;
+    background: rgba(23, 43, 93, 0.6);
+    margin: 0 auto;
 }
 
 .navbar-nav>li {
@@ -794,7 +796,7 @@
 .sub_menu {
     margin-top: 0px;
     position: absolute;
-    background-color: rgba(0, 0, 0, 0.60);
+    background-color: rgba(23, 43, 93, 0.60);
     width: 10%;
     min-width: 150px;
     -moz-border-radius: 8px;
