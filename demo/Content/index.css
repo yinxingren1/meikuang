@@ -926,3 +926,11 @@
     height: 24px;
     margin: 13px
 }
+
+.btm {
+    cursor: pointer;
+    display: block;
+    width: 25px;
+    height: 25px;
+    margin: 10px 10px 20px 10px
+}
