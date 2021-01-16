@@ -4,13 +4,16 @@ var query3Dtiles = {
     viewer: null,
     selmtile: [],
     flag: false,
+    n_tile: null,
     start() {
-        if (this.flag) {
+        var this_ = this;
+        if (this_.flag) {
+            this_.viewer.flyTo(this_.n_tile);
             return
         }
-        this.flag = true;
-        this.viewer = viewer;
-        var n_tile = this.load3DTiles(viewer, {
+        this_.flag = true;
+        this_.viewer = viewer;
+        this_.n_tile = loadmapProvider.load3DTiles(viewer, {
             url: 'http://resource.dvgis.cn/data/3dtiles/ljz/tileset.json',
             style: {
                 color: {
@@ -29,42 +32,10 @@ var query3Dtiles = {
             height: 0,
             isZoomTo: true
         });
-        var this_ = this;
-        n_tile.readyPromise.then(function () {
-            this_.lclick([n_tile]);
+        this_.n_tile.readyPromise.then(function () {
+            this_.lclick([this_.n_tile]);
         });
 
-    },
-    //加载模型
-    load3DTiles(viewer, opts) {
-        var opts = opts;
-        var viewer = viewer;
-
-        //加载3DTiles数据
-        var tiles = new Cesium.Cesium3DTileset({
-            url: opts.url
-        })
-        //设置tiles风格
-        tiles.style = new Cesium.Cesium3DTileStyle(opts.style);
-        //获取生成的3维对象
-        var target = viewer.scene.primitives.add(tiles);
-
-        target.readyPromise.then(function (target) {
-            var heightOffset = opts.height;  //3dtiles的高度设置
-            var boundingSphere = target.boundingSphere;
-            var cartographic = Cesium.Cartographic.fromCartesian(boundingSphere.center);
-            var surface = Cesium.Cartesian3.fromRadians(cartographic.longitude, cartographic.latitude, 0.0);
-            var offset = Cesium.Cartesian3.fromRadians(cartographic.longitude, cartographic.latitude, heightOffset);
-            var translation = Cesium.Cartesian3.subtract(offset, surface, new Cesium.Cartesian3());
-            target.modelMatrix = Cesium.Matrix4.fromTranslation(translation);
-            //viewer.zoomTo(target, new Cesium.HeadingPitchRange(0.5, -0.2, target.boundingSphere.radius * 1.0));
-        });
-
-        //是否缩放到加载的图层
-        if (opts.isZoomTo) {
-            viewer.zoomTo(target);
-        }
-        return tiles;
     },
     lclick(sel3Dtiles) {
         var this_ = this;
@@ -155,22 +126,12 @@ var query3Dtiles = {
               `,
             }
         });
-        return;
-        var pinBuilder = new Cesium.PinBuilder();
-        var pin50 = pinBuilder.fromText(text, Cesium.Color.CORNFLOWERBLUE.withAlpha(0.6), 220).toDataURL();
-        viewer.entities.add({
-            position: positions,
-            billboard: {
-                image: pin50,
-                disableDepthTestDistance: Number.POSITIVE_INFINITY,
-                // scale: 0.5 //设置图片大小
-            }
-
-        });
     }
 };
-
-
+$("#menu-query").on("click", function () {
+    query3Dtiles.start();
+});
+//信息框
 var tooltip = {
     viewer: viewer,
     id: 0,
@@ -250,5 +211,97 @@ var tooltip = {
         if (this.eventListener)
             this.viewer.clock.onTick.removeEventListener(this.eventListener);
         this.eventListener = null;
+    }
+}
+//加载3dtiles/kml，geojson
+var loadmapProvider = {
+    _kmllist: [],
+    _geojsonlist: [],
+    _3dtileslist: [],
+    //加载模型
+    load3DTiles(viewer, opts) {
+        var this_ = this;
+        var opts = opts;
+        var viewer = viewer;
+
+        //加载3DTiles数据
+        var tiles = new Cesium.Cesium3DTileset({
+            url: opts.url
+        })
+        //设置tiles风格
+        tiles.style = new Cesium.Cesium3DTileStyle(opts.style);
+        //获取生成的3维对象
+        var target = viewer.scene.primitives.add(tiles);
+
+        target.readyPromise.then(function (target) {
+            var heightOffset = opts.height;  //3dtiles的高度设置
+            var boundingSphere = target.boundingSphere;
+            var cartographic = Cesium.Cartographic.fromCartesian(boundingSphere.center);
+            var surface = Cesium.Cartesian3.fromRadians(cartographic.longitude, cartographic.latitude, 0.0);
+            var offset = Cesium.Cartesian3.fromRadians(cartographic.longitude, cartographic.latitude, heightOffset);
+            var translation = Cesium.Cartesian3.subtract(offset, surface, new Cesium.Cartesian3());
+            target.modelMatrix = Cesium.Matrix4.fromTranslation(translation);
+            //viewer.zoomTo(target, new Cesium.HeadingPitchRange(0.5, -0.2, target.boundingSphere.radius * 1.0));
+        });
+
+        //是否缩放到加载的图层
+        if (opts.isZoomTo) {
+            viewer.zoomTo(target);
+        }
+        this_._3dtileslist.push(tiles);
+        return tiles;
+    },
+    //加载kml
+    loadKML(viewer, opts) {
+        var this_ = this;
+        var opts = opts;
+        var viewer = viewer;
+        // 加载kml文件
+        var kmlOptions = {
+            camera: viewer.scene.camera,
+            canvas: viewer.scene.canvas,
+            clampToGround: true
+        };
+        var kmlmx = Cesium.KmlDataSource.load(opts.url, kmlOptions);
+        viewer.dataSources.add(kmlmx);
+        //是否缩放到加载的图层
+        if (opts.isZoomTo) {
+            viewer.zoomTo(kmlmx);
+        }
+        this_._kmllist.push(kmlmx);
+        return kmlmx;
+    },
+    loadGeojson(viewer, opts) {
+        var this_ = this;
+        var opts = opts;
+        var viewer = viewer;
+        var dataSource = Cesium.GeoJsonDataSource.load(opts.url, {
+            clampToGround: opts.clampToGround
+        });
+        dataSource.then(function (dataSource) {
+            var dataSource_ = dataSource
+
+            viewer.dataSources.add(dataSource_);
+            var entities = dataSource_.entities.values;
+            for (var i = 0; i < entities.length; i++) {
+                var entity = entities[i];
+                if (opts.styleOpts) {
+                    if (entity.polygon) {
+                        Object.assign(entity.polygon, opts.styleOpts)
+                    } else if (entity.billboard) {
+                        Object.assign(entity.billboard, opts.styleOpts)
+                    } else if (entity.point) {
+                        Object.assign(entity.point, opts.styleOpts)
+                    } else if (entity.polyline) {
+                        Object.assign(entity.polyline, opts.styleOpts)
+                    }
+                }
+            }
+            this_._geojsonlist.push(dataSource_);
+            if (opts.isZoomTo) {
+                viewer.flyTo(entities);
+            }
+        })
+        return dataSource;
     }
 }
