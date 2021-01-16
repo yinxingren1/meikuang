@@ -1,7 +1,8 @@
-var layer;
+﻿var layer;
 var measureIds = [];
 var handler;
 var layindex;
+var tileset; //高程
 $(document).ready(function() {
     layui.use('layer', function() { //独立版的layer无需执行这一句
         layer = layui.layer; //独立版的layer无需执行这一句
@@ -29,7 +30,7 @@ $(document).ready(function() {
             skin: 'layer-mars-dialog',
             scrollbar: false,
             shade: 0,
-            area: ['208px', '210px'], //宽高
+            area: ['208px', '200px'], //宽高
             content: getPoint(),
             success: function(layero, index) {
                 let handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas);
@@ -40,38 +41,72 @@ $(document).ready(function() {
                         let cartographic = ellipsoid.cartesianToCartographic(earthPosition);
                         let lat = Cesium.Math.toDegrees(cartographic.latitude);
                         let lon = Cesium.Math.toDegrees(cartographic.longitude);
+                        let height = Cesium.Math.toDegrees(cartographic.height);
                         let params = {
-                            id: '测试' + lon,
+                            id: '点',
                             name: 'text',
                             lon: lon,
-                            lat: lat
+                            lat: lat,
+                            pixelSize: height
                         };
                         AddPoint(params);
+                        $('#point_jd').val(lon);
+                        $('#point_wd').val(lat);
+                        $('#point_height').val(height);
                     }
                 }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
             }
         })
     })
+    $("#menu-scale").on("click", function() {
+        if (CesiumNavigation.distanceLegendDiv.hidden)
+            CesiumNavigation.distanceLegendDiv.hidden = false;
+        else {
+            CesiumNavigation.distanceLegendDiv.hidden = true;
+        }
+    })
+    $("#menu-line").on("click", function() {
+        tileset = new Cesium.Cesium3DTileset({
+            url: 'http://earthsdk.com/v/last/Apps/assets/dayanta/tileset.json'
+        });
+        viewer.scene.primitives.add(tileset);
+        tileset.readyPromise.then(function(tileset) {
+            //调整位置
+            var modelPos = Cesium.Cartesian3.fromDegrees(108.9594, 34.2195, 3.05);
+            var m = Cesium.Transforms.eastNorthUpToFixedFrame(modelPos);
+            tileset._root.transform = m;
+        });
+        viewer.flyTo(tileset);
+        measureClampDistance(viewer);
+    })
+    $("#menu-area").on("click", function() {
+        if (!tileset) {
+            tileset = new Cesium.Cesium3DTileset({
+                url: 'http://earthsdk.com/v/last/Apps/assets/dayanta/tileset.json'
+            });
+            viewer.scene.primitives.add(tileset);
+            tileset.readyPromise.then(function(tileset) {
+                //调整位置
+                var modelPos = Cesium.Cartesian3.fromDegrees(108.9594, 34.2195, 3.05);
+                var m = Cesium.Transforms.eastNorthUpToFixedFrame(modelPos);
+                tileset._root.transform = m;
+            });
+            viewer.flyTo(tileset);
+        }
+        measureAreaSpace(viewer);
+    })
+    $("#menu-clear").on("click", function() {
+
+        viewer.entities.removeAll();
+
+    })
+
+
 })
 
 
 //量测对话框
 function showMeasureDialog() {
-    var tileset = new Cesium.Cesium3DTileset({
-        url: 'http://earthsdk.com/v/last/Apps/assets/dayanta/tileset.json'
-    });
-    var aaa = viewer.scene.primitives.add(tileset);
-    aaa.readyPromise.then(function(aaa) {
-        var heightOffset = 0.0; //高度
-        var boundingSphere = aaa.boundingSphere;
-        var cartographic = Cesium.Cartographic.fromCartesian(boundingSphere.center);
-        var surface = Cesium.Cartesian3.fromRadians(cartographic.longitude, cartographic.latitude, 0.0);
-        var offset = Cesium.Cartesian3.fromRadians(cartographic.longitude, cartographic.latitude, heightOffset);
-        var translation = Cesium.Cartesian3.subtract(offset, surface, new Cesium.Cartesian3());
-        aaa.modelMatrix = Cesium.Matrix4.fromTranslation(translation);
-        viewer.zoomTo(aaa, new Cesium.HeadingPitchRange(0.5, -0.2, aaa.boundingSphere.radius * 1.0));
-    });
-
     $('#dropdown-menu').hide();
     layindex = layer.open({
         title: '图上量算',
@@ -173,7 +208,7 @@ function btnCenterXY() {
         pixelSize: height
     };
     AddPoint(params);
-    viewer.camera.flyTo({ destination: Cesium.Cartesian3.fromDegrees(params.lon, params.lat, params.pixelSize) });
+    viewer.camera.flyTo({ destination: Cesium.Cartesian3.fromDegrees(params.lon, params.lat) });
 }
 
 function AddPoint(params) {
