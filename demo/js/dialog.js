@@ -33,7 +33,7 @@ $(document).ready(function() {
             area: ['208px', '200px'], //宽高
             content: getPoint(),
             success: function(layero, index) {
-                let handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas);
+                handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas);
                 handler.setInputAction(function(event) {
                     var earthPosition = viewer.camera.pickEllipsoid(event.position, viewer.scene.globe.ellipsoid);
                     if (Cesium.defined(earthPosition)) {
@@ -59,6 +59,7 @@ $(document).ready(function() {
         })
     })
     $("#menu-scale").on("click", function() {
+        $("#menu-clear").click();
         if (CesiumNavigation.distanceLegendDiv.hidden)
             CesiumNavigation.distanceLegendDiv.hidden = false;
         else {
@@ -66,6 +67,8 @@ $(document).ready(function() {
         }
     })
     $("#menu-line").on("click", function() {
+
+        $("#menu-clear").click();
         tileset = new Cesium.Cesium3DTileset({
             url: 'http://earthsdk.com/v/last/Apps/assets/dayanta/tileset.json'
         });
@@ -80,6 +83,7 @@ $(document).ready(function() {
         measureClampDistance(viewer);
     })
     $("#menu-area").on("click", function() {
+        $("#menu-clear").click();
         if (!tileset) {
             tileset = new Cesium.Cesium3DTileset({
                 url: 'http://earthsdk.com/v/last/Apps/assets/dayanta/tileset.json'
@@ -95,8 +99,16 @@ $(document).ready(function() {
         }
         measureAreaSpace(viewer);
     })
-    $("#menu-clear").on("click", function() {
+    $("#menu-query").on("click", function() {
+        query3Dtiles.start();
+    })
 
+    $("#menu-clear").on("click", function() {
+        tooltip.closeAll();
+        if (handler) {
+            handler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_CLICK);
+        }
+        viewer.entities.removeById('点');
         viewer.entities.removeAll();
 
     })

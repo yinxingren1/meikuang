@@ -30,7 +30,7 @@ var query3Dtiles = {
             isZoomTo: true
         });
         var this_ = this;
-        n_tile.readyPromise.then(function () {
+        n_tile.readyPromise.then(function() {
             this_.lclick([n_tile]);
         });
 
@@ -42,15 +42,15 @@ var query3Dtiles = {
 
         //加载3DTiles数据
         var tiles = new Cesium.Cesium3DTileset({
-            url: opts.url
-        })
-        //设置tiles风格
+                url: opts.url
+            })
+            //设置tiles风格
         tiles.style = new Cesium.Cesium3DTileStyle(opts.style);
         //获取生成的3维对象
         var target = viewer.scene.primitives.add(tiles);
 
-        target.readyPromise.then(function (target) {
-            var heightOffset = opts.height;  //3dtiles的高度设置
+        target.readyPromise.then(function(target) {
+            var heightOffset = opts.height; //3dtiles的高度设置
             var boundingSphere = target.boundingSphere;
             var cartographic = Cesium.Cartographic.fromCartesian(boundingSphere.center);
             var surface = Cesium.Cartesian3.fromRadians(cartographic.longitude, cartographic.latitude, 0.0);
@@ -73,7 +73,7 @@ var query3Dtiles = {
             this.handler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_CLICK);
         }
         this.handler = new Cesium.ScreenSpaceEventHandler(this.viewer.scene.canvas);
-        this.handler.setInputAction(function (movement) {
+        this.handler.setInputAction(function(movement) {
             var fea = this_.viewer.scene.pick(movement.position);
             if (fea) {
                 if (sel3Dtiles != null) {
@@ -108,7 +108,9 @@ var query3Dtiles = {
 
                 }
             } else {
-                fea.id.polygon.material = new Cesium.Color(0, 1, 1, 0.3)
+                if (fea != undefined) {
+                    fea.id.polygon.material = new Cesium.Color(0, 1, 1, 0.3);
+                }
             }
         }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
     },
@@ -189,7 +191,7 @@ var tooltip = {
         _this.ctnList[id] = [geometry, ctn];
         _this.render();
         if (!_this.eventListener) {
-            _this.eventListener = function (clock) {
+            _this.eventListener = function(clock) {
                 _this.render();
             };
             _this.viewer.clock.onTick.addEventListener(_this.eventListener)
