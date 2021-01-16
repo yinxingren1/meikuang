@@ -99,6 +99,10 @@ $(document).ready(function() {
 
         viewer.entities.removeAll();
 
+        if (tooltip) {
+            tooltip.closeAll()
+        }
+        query3Dtiles.clearsel();
     })
 
 

@@ -1,4 +1,4 @@
-var query3Dtiles = {
+﻿var query3Dtiles = {
     //
     handler: null,
     viewer: null,
@@ -60,10 +60,10 @@ var query3Dtiles = {
                             // }
 
                             if (fea instanceof Cesium.Cesium3DTileFeature) {
-
-                                if (this_.selmtile.length > 0) {
-                                    this_.selmtile[0].color = this_.selmtile[1];
-                                }
+                                this_.clearsel();
+                                // if (this_.selmtile.length > 0) {
+                                //     this_.selmtile[0].color = this_.selmtile[1];
+                                // }
                                 this_.selmtile = [fea, fea.color];
 
                                 fea.color = Cesium.Color.RED;
@@ -79,9 +79,19 @@ var query3Dtiles = {
 
                 }
             } else {
-                fea.id.polygon.material = new Cesium.Color(0, 1, 1, 0.3)
+                // fea.id.polygon.material = new Cesium.Color(0, 1, 1, 0.3)
             }
         }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+    },
+    clearsel() {
+        if (this.selmtile.length > 0) {
+            if (this.selmtile[0].id && this.selmtile[0].id.polygon) {
+                this.selmtile[0].id.polygon.material = this.selmtile[1];
+            } else {
+                this.selmtile[0].color = this.selmtile[1];
+            }
+            this.selmtile = [];
+        }
     },
     closeLclick() {
         if (this.handler) {
