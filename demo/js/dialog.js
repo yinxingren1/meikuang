@@ -17,6 +17,9 @@ $(document).ready(function() {
             case "analysis":
                 showAnalysisDialog();
                 break;
+            case "drawHelpper":
+                drawHelpper();
+                break;
             default:
                 break;
         }
